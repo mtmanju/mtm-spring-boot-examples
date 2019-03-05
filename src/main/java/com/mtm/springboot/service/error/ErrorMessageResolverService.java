@@ -1,4 +1,4 @@
-package com.mtm.springboot.service;
+package com.mtm.springboot.service.error;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -12,12 +12,13 @@ import com.mtm.springboot.error.CustomError;
 
 @Service("errorMessageResolverService")
 public class ErrorMessageResolverService {
-	public String resolveErrorMessageByErrorCode(CustomError errorCode, String[] params, String locale)
+
+	public String getErrorMessageForErrorCode(CustomError errorCode, String[] params, String locale)
 			throws IOException {
-		if (errorCode != null) {
-			Properties prop = PropertiesLoaderUtils.loadProperties(
+		if (null != errorCode) {
+			Properties properties = PropertiesLoaderUtils.loadProperties(
 					new ClassPathResource(String.format("errorMessage_%s.properties", locale.toLowerCase())));
-			String errorMessage = prop.getProperty(errorCode.name());
+			String errorMessage = properties.getProperty(errorCode.name());
 			if (StringUtils.isNotBlank(errorMessage)) {
 				return String.format(errorMessage, (Object[]) params);
 			}

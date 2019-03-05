@@ -8,8 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 
 import com.mtm.springboot.error.CustomError;
-import com.mtm.springboot.service.ErrorMessageResolverService;
-import com.mtm.springboot.util.CustomApplicationContextAware;
+import com.mtm.springboot.service.context.CustomApplicationContextAware;
+import com.mtm.springboot.service.error.ErrorMessageResolverService;
 
 /**
  * @author ManjunathMT
@@ -18,7 +18,7 @@ import com.mtm.springboot.util.CustomApplicationContextAware;
 public class CustomException extends Exception {
 	private static final Logger LOGGER = LoggerFactory.getLogger(CustomException.class);
 
-	private static final long serialVersionUID = 2660944572410073250L;
+	private static final long serialVersionUID = 1L;
 
 	private CustomError errorCode;
 	private String[] params;
@@ -40,34 +40,15 @@ public class CustomException extends Exception {
 		this.params = params;
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder(super.toString());
-		Throwable e = this.getCause();
-		while (e != null) {
-			sb.append("\nCaused by: ").append(e.toString());
-			e = e.getCause();
-		}
-
-		return sb.toString();
-	}
-
-	public String getErrorCode() {
-		if (errorCode == null) {
-			errorCode = CustomError.OM_1001;
-		}
-		return errorCode.name();
-	}
-
 	public String getErrorMessage() {
 		ErrorMessageResolverService errorMessageResolverService = CustomApplicationContextAware
 				.getBean(ErrorMessageResolverService.class);
-		if (errorMessageResolverService != null) {
+		if (null != errorMessageResolverService) {
 			try {
-				if (errorCode == null) {
+				if (null == errorCode) {
 					errorCode = CustomError.OM_1001;
 				}
-				return errorMessageResolverService.resolveErrorMessageByErrorCode(errorCode, params,
+				return errorMessageResolverService.getErrorMessageForErrorCode(errorCode, params,
 						Locale.ENGLISH.toString());
 			} catch (IOException e) {
 				LOGGER.error("Exception while resolving error message :- {}", e.getMessage());
@@ -76,8 +57,26 @@ public class CustomException extends Exception {
 		return null;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder stringBuilder = new StringBuilder(super.toString());
+		Throwable exception = this.getCause();
+		while (null != exception) {
+			stringBuilder.append("\nCaused by: ").append(exception.toString());
+			exception = exception.getCause();
+		}
+		return stringBuilder.toString();
+	}
+
+	public String getErrorCode() {
+		if (null == errorCode) {
+			errorCode = CustomError.OM_1001;
+		}
+		return errorCode.name();
+	}
+
 	public HttpStatus getHttpStatusCode() {
-		if (errorCode == null) {
+		if (null == errorCode) {
 			errorCode = CustomError.OM_1001;
 		}
 		return errorCode.getStatusCode();

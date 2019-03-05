@@ -1,4 +1,4 @@
-package com.mtm.springboot.util;
+package com.mtm.springboot.service.context;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
