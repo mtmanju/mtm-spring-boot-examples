@@ -10,22 +10,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mtm.springboot.controller.SpringBootExamplesController;
+import com.mtm.springboot.controller.SampleController;
 import com.mtm.springboot.domain.SampleData;
 import com.mtm.springboot.error.CustomError;
 import com.mtm.springboot.exceptions.CustomException;
-import com.mtm.springboot.service.SpringBootExamplesService;
+import com.mtm.springboot.service.SampleService;
 
 import io.swagger.annotations.Api;
 import reactor.core.publisher.Mono;
 
 @RestController
 @Api(tags = "Spring Boot Examples")
-public class SpringBootExamplesControllerImpl implements SpringBootExamplesController {
-	private static final Logger LOGGER = LoggerFactory.getLogger(SpringBootExamplesControllerImpl.class);
+public class SampleControllerImpl implements SampleController {
+	private static final Logger LOGGER = LoggerFactory.getLogger(SampleControllerImpl.class);
 
 	@Autowired
-	private SpringBootExamplesService exampleService;
+	private SampleService exampleService;
 
 	@Override
 	public Mono<ResponseEntity<Object>> saveData(@RequestBody SampleData request) {

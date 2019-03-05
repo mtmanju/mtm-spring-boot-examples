@@ -15,7 +15,7 @@ import com.mtm.springboot.domain.SampleData;
 import reactor.core.publisher.Mono;
 
 @RequestMapping(value = "/mtm/examples")
-public interface SpringBootExamplesController {
+public interface SampleController {
 
 	@PostMapping()
 	public Mono<ResponseEntity<Object>> saveData(@RequestBody SampleData request);

@@ -6,7 +6,7 @@ import com.mtm.springboot.domain.SampleData;
 
 import reactor.core.publisher.Mono;
 
-public interface SpringBootExamplesService {
+public interface SampleService {
 
 	public Mono<SampleData> saveData(SampleData request);
 

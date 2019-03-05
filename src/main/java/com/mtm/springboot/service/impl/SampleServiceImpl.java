@@ -4,12 +4,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.mtm.springboot.domain.SampleData;
-import com.mtm.springboot.service.SpringBootExamplesService;
+import com.mtm.springboot.service.SampleService;
 
 import reactor.core.publisher.Mono;
 
 @Service
-public class SpringBootExamplesServiceImpl implements SpringBootExamplesService {
+public class SampleServiceImpl implements SampleService {
 
 	@Override
 	public Mono<SampleData> saveData(SampleData request) {
