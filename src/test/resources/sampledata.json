@@ -1,0 +1,13 @@
+{
+  "description": "Manju",
+  "identifier": "123",
+  "name": "string",
+  "variables": [
+    {
+      "name": "string",
+      "type": "string",
+      "value": {},
+      "valueUrl": "http://localhost:8080/mtm/examples/123"
+    }
+  ]
+}
