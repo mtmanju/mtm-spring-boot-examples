@@ -10,7 +10,7 @@ public interface SampleService {
 
 	public Mono<SampleData> saveData(SampleData request);
 
-	public Mono<ResponseEntity<Object>> getData();
+	public Mono<Object> getData();
 
 	public Mono<ResponseEntity<Object>> updateData();
 

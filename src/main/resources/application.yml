@@ -1,6 +1,6 @@
-#server:
-#  port: 8093
-
 spring:
   application:
-    name: 'MTM Spring Boot Examples'
+    name: MTM Spring Boot Examples
+sample:
+  baseurl: http://localhost:8080/
+  baseUrl2: http://localhost:8081/
