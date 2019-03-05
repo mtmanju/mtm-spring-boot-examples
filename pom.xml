@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>com.mtm.springboot.examples</groupId>
 	<artifactId>mtm-spring-boot-examples</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0-SNAPSHOT</version>
 	<name>mtm-spring-boot-examples</name>
 	<description>Demo project for Spring Boot</description>
 
