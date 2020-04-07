@@ -38,5 +38,4 @@ public interface SampleController {
 	@PostMapping("/calculate-charges")
 	public Mono<ResponseEntity<Object>> calculateFuturesOptionsCharges(
 			@RequestPart(name = "file", required = true) MultipartFile file);
-
 }
