@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.mtm.springboot.domain.SampleData;
 import com.mtm.springboot.service.SampleService;
@@ -34,6 +35,12 @@ public class SampleServiceImpl implements SampleService {
 
 	@Override
 	public Mono<ResponseEntity<Object>> deleteData() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Mono<ResponseEntity<Object>> calculateFOCharges(MultipartFile file) {
 		// TODO Auto-generated method stub
 		return null;
 	}

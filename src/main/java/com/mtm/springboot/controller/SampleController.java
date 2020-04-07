@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.mtm.springboot.domain.SampleData;
 
@@ -32,5 +34,9 @@ public interface SampleController {
 
 	@DeleteMapping("/{identifier}")
 	public Mono<ResponseEntity<Object>> deleteData(@PathParam(value = "identifier") String identifier);
+
+	@PostMapping("/calculate-charges")
+	public Mono<ResponseEntity<Object>> calculateFuturesOptionsCharges(
+			@RequestPart(name = "file", required = true) MultipartFile file);
 
 }

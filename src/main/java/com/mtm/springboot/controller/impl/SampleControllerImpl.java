@@ -2,14 +2,13 @@ package com.mtm.springboot.controller.impl;
 
 import javax.websocket.server.PathParam;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.mtm.springboot.controller.SampleController;
 import com.mtm.springboot.domain.SampleData;
@@ -18,23 +17,24 @@ import com.mtm.springboot.exceptions.CustomException;
 import com.mtm.springboot.service.SampleService;
 
 import io.swagger.annotations.Api;
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
 @RestController
 @Api(tags = "Spring Boot Examples")
+@Slf4j
 public class SampleControllerImpl implements SampleController {
-	private static final Logger LOGGER = LoggerFactory.getLogger(SampleControllerImpl.class);
 
 	@Autowired
 	@Qualifier("sampleService2")
-	private SampleService exampleService;
+	private SampleService sampleService2;
 
 	@Override
 	public Mono<ResponseEntity<Object>> saveData(@RequestBody SampleData request) {
-		LOGGER.info("SpringBootExamplesControllerImpl.saveData() -->");
-		return exampleService.saveData(request).map(savedData -> new ResponseEntity<Object>(savedData, HttpStatus.OK))
+		log.info("SpringBootExamplesControllerImpl.saveData() -->");
+		return sampleService2.saveData(request).map(savedData -> new ResponseEntity<Object>(savedData, HttpStatus.OK))
 				.onErrorResume(exception -> {
-					LOGGER.error(exception.getMessage());
+					log.error(exception.getMessage());
 					ResponseEntity<Object> response = new ResponseEntity<>(
 							new CustomException(CustomError.OM_1010).getErrorMessage(),
 							new CustomException(CustomError.OM_1010).getHttpStatusCode());
@@ -42,15 +42,15 @@ public class SampleControllerImpl implements SampleController {
 						response = new ResponseEntity<>(((CustomException) exception).getErrorMessage(),
 								((CustomException) exception).getHttpStatusCode());
 					return Mono.just(response);
-				}).doOnSuccess(reponse -> LOGGER.info("<-- SpringBootExamplesControllerImpl.saveData()"));
+				}).doOnSuccess(reponse -> log.info("<-- SpringBootExamplesControllerImpl.saveData()"));
 	}
 
 	@Override
 	public Mono<ResponseEntity<Object>> getCompleteData() {
-		LOGGER.info("SpringBootExamplesControllerImpl.getCompleteData() -->");
-		return exampleService.getData().map(savedData -> new ResponseEntity<Object>(savedData, HttpStatus.OK))
+		log.info("SpringBootExamplesControllerImpl.getCompleteData() -->");
+		return sampleService2.getData().map(savedData -> new ResponseEntity<Object>(savedData, HttpStatus.OK))
 				.onErrorResume(exception -> {
-					LOGGER.error(exception.getMessage());
+					log.error(exception.getMessage());
 					ResponseEntity<Object> response = new ResponseEntity<>(
 							new CustomException(CustomError.OM_1010).getErrorMessage(),
 							new CustomException(CustomError.OM_1010).getHttpStatusCode());
@@ -58,7 +58,7 @@ public class SampleControllerImpl implements SampleController {
 						response = new ResponseEntity<>(((CustomException) exception).getErrorMessage(),
 								((CustomException) exception).getHttpStatusCode());
 					return Mono.just(response);
-				}).doOnSuccess(reponse -> LOGGER.info("<-- SpringBootExamplesControllerImpl.getCompleteData()"));
+				}).doOnSuccess(reponse -> log.info("<-- SpringBootExamplesControllerImpl.getCompleteData()"));
 	}
 
 	@Override
@@ -77,6 +77,23 @@ public class SampleControllerImpl implements SampleController {
 	public Mono<ResponseEntity<Object>> deleteData(@PathParam(value = "identifier") String identifier) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public Mono<ResponseEntity<Object>> calculateFuturesOptionsCharges(MultipartFile file) {
+		log.info("SpringBootExamplesControllerImpl.saveData() -->");
+		return sampleService2.calculateFOCharges(file)
+				.map(savedData -> new ResponseEntity<Object>(savedData, HttpStatus.OK)).onErrorResume(exception -> {
+					log.error(exception.getMessage());
+					ResponseEntity<Object> response = new ResponseEntity<>(
+							new CustomException(CustomError.OM_1010).getErrorMessage(),
+							new CustomException(CustomError.OM_1010).getHttpStatusCode());
+					if (exception instanceof CustomException)
+						response = new ResponseEntity<>(((CustomException) exception).getErrorMessage(),
+								((CustomException) exception).getHttpStatusCode());
+					return Mono.just(response);
+				}).doOnSuccess(reponse -> log.info("<-- SpringBootExamplesControllerImpl.saveData()"));
+
 	}
 
 }
